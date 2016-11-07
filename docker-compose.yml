@@ -1,0 +1,17 @@
+elasticsearch:
+  image: lucasko/elasticsearch
+  user: elsearch
+  ports:
+    - "29200:9200" 
+    - "29300:9300" 
+  restart: always
+
+logstash:
+  image: logstash
+  links:
+    - elasticsearch
+  volumes:
+    - $PWD:/config-dir
+  command: -f "/config-dir/logstash.config"
+  restart: always
+
